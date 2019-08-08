@@ -1,0 +1,24 @@
+pipeline {
+    agent any
+    tools {
+        nodejs 'nodejs'
+    }
+    stages {
+        stage("build") {
+            steps{
+                 echo 'Building Result project'
+                 dir ("result") {
+                     sh 'npm install'
+                 }
+            }
+        }
+        stage("test") {
+            steps{
+                 echo 'Testing Result Project'
+                 dir ("result") {
+                     sh 'npm test'
+                 }
+            }
+        }
+    }
+}
