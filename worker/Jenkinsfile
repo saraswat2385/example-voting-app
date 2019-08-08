@@ -1,31 +1,37 @@
 pipeline {
-    agent
+    agent any
     tools {
-       maven "Maven 3.6.1"
-    } 
-    stages{
-        stage("one"){
+        maven 'Maven 3.3'
+    }
+    stages {
+        stage("build") {
             steps{
-                echo 'Building worker app'
-                dir ("worker") {
-			sh 'mvn compile'
-		}
+                 echo 'Building worker project'
+                 dir ("worker") {
+                     sh 'mvn compile'
+                 }
             }
         }
-        stage("two"){
+        stage("test") {
             steps{
-                echo 'step 2'
+                 echo 'Testing worker Project'
+                 dir ("worker") {
+                     sh 'mvn test'
+                 }
             }
         }
-        stage("three"){
+        stage("package") {
             steps{
-                echo 'step 3'
+                 echo 'Packaging Worker project'
+                 dir ("worker") {
+                     sh 'mvn package'
+                 }
             }
         }
     }
-    post{
-        always{
-            echo 'This pipeline is completed..'
+    post {
+        always {
+            echo ' I will always say hello'
         }
     }
 }
